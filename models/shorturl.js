@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const shortid = require('shortid');
+// shortid : Amazingly short non-sequential url-friendly unique id generator.
 
 const shorturlSchema = new mongoose.Schema({
   full: {

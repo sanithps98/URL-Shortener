@@ -14,16 +14,20 @@ mongoose.connect(
 
 // Express uses jade as its default template engine ,so we would have to tell it to use ejs instead
 app.set('view engine', 'ejs');
+
+// express.urlencode : This is a built-in middleware function in Express. It parses incoming requests with urlencoded payloads and is based on body-parser
+// 
 app.use(
   express.urlencoded({
     extended: false,
   })
 );
 
+// This is used inorder to show the URL inside the table in the page  
 app.get('/', async (req, res) => {
   const shorturls = await shorturl.find();
-  res.render('index', {
-    shorturls: shorturls,
+  res.render('index', { // res.render() function is used to render a view and sends the rendered HTML string to the client.
+    shorturls: shorturls, // These shorturls are passed into the view
   });
 });
 
@@ -31,20 +35,21 @@ app.post('/shorturls', async (req, res) => {
   await shorturl.create({
     full: req.body.fullUrl,
   });
-  res.redirect('/');
+  res.redirect('/'); // Redirects the user to the homepage - index.ejs
 });
 
-// eslint-disable-next-line consistent-return
+// This route is created in order to redirect to the webpage when the shortened version of the original url is clicked !!!
+
 app.get('/:shorturl', async (req, res) => {
   const shorturlValue = await shorturl.findOne({
     short: req.params.shorturl,
   });
   if (shorturlValue == null) return res.sendStatus(404);
 
-  shorturlValue.clicks += 1;
+  shorturlValue.clicks += 1; // Calculates the total no of clicks in the shortened version of the original url
   shorturlValue.save();
 
-  res.redirect(shorturlValue.full);
+  res.redirect(shorturlValue.full); // Redirects to the webpage
 });
 
 // eslint-disable-next-line prettier/prettier
