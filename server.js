@@ -6,8 +6,7 @@ const app = express();
 
 mongoose.connect(
   // eslint-disable-next-line prettier/prettier
-  'mongodb://admin:admin@cluster0-shard-00-00-ppij2.mongodb.net:27017,cluster0-shard-00-01-ppij2.mongodb.net:27017,cluster0-shard-00-02-ppij2.mongodb.net:27017/URLShortener?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
-  {
+  'mongodb://admin:admin@cluster0-shard-00-00-ppij2.mongodb.net:27017,cluster0-shard-00-01-ppij2.mongodb.net:27017,cluster0-shard-00-02-ppij2.mongodb.net:27017/URLShortener?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
@@ -35,6 +34,7 @@ app.post('/shorturls', async (req, res) => {
   res.redirect('/');
 });
 
+// eslint-disable-next-line consistent-return
 app.get('/:shorturl', async (req, res) => {
   const shorturlValue = await shorturl.findOne({
     short: req.params.shorturl,
