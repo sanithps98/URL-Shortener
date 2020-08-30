@@ -1,4 +1,4 @@
-// This model is going to store all our shorturl infromation
+// This model is going to store all our shorturl information
 
 const mongoose = require('mongoose');
 const shortid = require('shortid');
